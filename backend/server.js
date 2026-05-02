@@ -14,12 +14,13 @@ const app = express();
 connectDB();
 
 // ✅ CORS (Controlled + Safe)
-app.use(
-  cors({
-    origin: "http://localhost:3000", // change in production
-    credentials: true,
-  })
-);
+app.use(cors({
+  origin: [
+    "http://localhost:3000",
+    "https://ai-interview-app-smoky-three.vercel.app"
+  ],
+  credentials: true
+}));
 
 // ✅ Middleware
 app.use(express.json());
