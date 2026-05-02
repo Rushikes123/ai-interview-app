@@ -194,11 +194,11 @@ exports.getInterviewHistory = async (req, res) => {
   const updated = interviews.map(interview => {
 
     const scores = interview.questions.map(q => {
-      return (q.textScore || 0) + (q.videoScore || 0);
+      return q.textScore || q.videoScore || 0; // ✅ FIXED
     });
 
     const total = scores.reduce((a, b) => a + b, 0);
-    const avg = scores.length ? (total / (scores.length * 2)) : 0;
+    const avg = scores.length ? (total / scores.length) : 0; // ✅ FIXED
 
     return {
       ...interview.toObject(),
