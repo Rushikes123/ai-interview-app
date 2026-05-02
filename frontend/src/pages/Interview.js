@@ -23,9 +23,10 @@ function Interview() {
   const mediaRecorderRef = useRef(null);
   const streamRef = useRef(null);
 
-  useEffect(() => {
-    fetchInterview();
-  }, []);
+ useEffect(() => {
+  fetchInterview();
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, []);
 
   const fetchInterview = async () => {
     try {
