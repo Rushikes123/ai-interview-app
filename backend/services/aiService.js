@@ -86,31 +86,27 @@ ${answer}
 
 Evaluate this exactly like a real interviewer would.
 
-STRICT RULES:
-- Evaluate ONLY what is actually said (no assumptions)
-- If answer is irrelevant, nonsense, or random words → score 0–2
-- If answer is very short or incomplete → score 2–4
-- If answer shows partial understanding → score 4–6
-- If answer is good but missing depth → score 6–8
-- If answer is excellent → score 8–10
+STRICT SCORING RULES (VERY IMPORTANT):
+- Be strict. Do NOT be generous.
+- Evaluate ONLY what is actually written.
+
+SCORING GUIDE:
+- Completely irrelevant, random words, or nonsense → score MUST be 0 or 1
+- Very short or vague answer → score 2–3
+- Partial understanding → score 4–6
+- Good answer with minor gaps → score 6–8
+- Excellent, complete answer → score 9–10
+
+IMPORTANT:
+- If answer does NOT match question topic → score = 0
+- Do NOT assume intent or knowledge
+- Do NOT give benefit of doubt
 
 FEEDBACK STYLE:
 - Talk like a real interviewer (professional, direct, constructive)
 - Mention what is missing (depth, examples, clarity, structure)
 - Be specific — not generic
 - Keep it 2–3 lines maximum
-
-GOOD EXAMPLES:
-
-Input: "my name is rushi"
-Output:
-Score: 0
-Feedback: "This response does not address the question. I expected a technical explanation relevant to the problem."
-
-Input: "table chair laptop"
-Output:
-Score: 1
-Feedback: "The answer is not relevant to the question. Please focus on explaining your approach or solution."
 
 Return ONLY JSON:
 
