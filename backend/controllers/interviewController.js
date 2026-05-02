@@ -53,7 +53,7 @@ exports.generateInterview = async (req, res) => {
     const rawQuestions = await generateQuestions(resumeText);
 
     const cleanQuestions = rawQuestions
-      .map(q => q.trim())
+      .map(q => q.replace(/^Q\d+[:.)\s-]*/i, "").trim())
       .filter(q => q.length > 10)
       .slice(0, 10);
 
