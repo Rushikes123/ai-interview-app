@@ -190,5 +190,21 @@ exports.getInterviewResult = async (req, res) => {
 // ================= HISTORY =================
 exports.getInterviewHistory = async (req, res) => {
   const interviews = await Interview.find({ user: req.user.id });
-  res.json(interviews);
+
+  const updated = interviews.map(interview => {
+
+    const scores = interview.questions.map(q => {
+      return (q.textScore || 0) + (q.videoScore || 0);
+    });
+
+    const total = scores.reduce((a, b) => a + b, 0);
+    const avg = scores.length ? (total / (scores.length * 2)) : 0;
+
+    return {
+      ...interview.toObject(),
+      averageScore: Number(avg.toFixed(1))
+    };
+  });
+
+  res.json(updated);
 };
