@@ -17,7 +17,8 @@ connectDB();
 app.use(cors({
   origin: [
     "http://localhost:3000",
-    "https://ai-interview-app-smoky-three.vercel.app"
+    "https://ai-interview-app-smoky-three.vercel.app",
+    "https://interview-assist-ai.vercel.app"
   ],
   credentials: true
 }));
