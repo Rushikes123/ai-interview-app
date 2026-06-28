@@ -51,21 +51,38 @@ ${resumeText}
         throw new Error("Invalid format");
       }
 
-    } catch {
-      console.log("Fallback parsing");
+    }  catch {
+  console.log("Fallback parsing");
 
-      questions = text
-        .split("\n")
-        .filter(q => q.trim())
-        .map(q => q.replace(/^\d+[\).\-\s]*/, ""));
-    }
+  // Remove markdown, brackets and quotes
+  text = text
+    .replace(/^\[/, "")
+    .replace(/\]$/, "")
+    .replace(/'/g, "")
+    .replace(/"/g, "");
 
+  questions = text
+    .split(",")
+    .map(q => q.trim())
+    .filter(q => q.length > 0)
+    .map(q =>
+      q
+        .replace(/^\d+[\).\-\s]*/, "") // remove numbering like 1. or 1)
+        .trim()
+    );
+}
     return questions.slice(0, 10);
 
   } catch (error) {
-    console.error("AI Question Error:", error);
-    return ["Error generating questions"];
+  console.error("========== GROQ ERROR ==========");
+  console.error(error);
+
+  if (error.response) {
+    console.error(error.response.data);
   }
+
+  return ["Error generating questions"];
+}
 };
 
 
