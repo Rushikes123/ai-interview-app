@@ -13,59 +13,64 @@ const UploadResume = () => {
   };
 
   const handleUpload = async () => {
-  try {
-    if (!file) {
-      alert("Please select a file");
-      return;
-    }
-
-    // 🔥 STRICT FILE CHECK
-    if (file.type !== "application/pdf") {
-      alert("Only PDF files allowed");
-      return;
-    }
-
-    setLoading(true);
-
-    const formData = new FormData();
-    formData.append("resume", file);
-
-    console.log("Uploading file:", file); // debug
-
-    const uploadRes = await API.post(
-      "/interview/upload-resume",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data"
-        }
+    try {
+      if (!file) {
+        alert("Please select a file");
+        return;
       }
-    );
 
-    console.log("Upload response:", uploadRes.data);
+      // 🔥 STRICT FILE CHECK
+      if (file.type !== "application/pdf") {
+        alert("Only PDF files allowed");
+        return;
+      }
 
-    const resumeText = uploadRes.data.resumeText;
+      setLoading(true);
 
-    const interviewRes = await API.post(
-      "/interview/generate-interview",
-      { resumeText }
-    );
+      const formData = new FormData();
+      formData.append("resume", file);
 
-    const interviewId = interviewRes.data.interview._id;
+      console.log("Uploading file:", file); // debug
 
-    navigate(`/interview/${interviewId}`);
+      const uploadRes = await API.post(
+        "/interview/upload-resume",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        }
+      );
 
-  } catch (error) {
-    console.error("UPLOAD ERROR:", error.response?.data || error.message);
+      console.log("Upload response:", uploadRes.data);
 
-    alert(
-      error.response?.data?.message || "Upload failed. Check console."
-    );
+      const resumeText = uploadRes.data.resumeText;
 
-  } finally {
-    setLoading(false);
-  }
-};
+      const interviewRes = await API.post(
+        "/interview/generate-interview",
+        { resumeText }
+      );
+
+      console.log(
+  "Questions:",
+  JSON.stringify(interviewRes.data.interview.questions, null, 2)
+);
+
+      const interviewId = interviewRes.data.interview._id;
+
+      navigate(`/interview/${interviewId}`);
+
+    } catch (error) {
+      console.error("UPLOAD ERROR:", error.response?.data || error.message);
+
+      alert(
+        error.response?.data?.message || "Upload failed. Check console."
+      );
+
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div
@@ -119,11 +124,10 @@ const UploadResume = () => {
           onClick={handleUpload}
           disabled={loading}
           className={`w-full py-3 rounded-lg font-semibold transition duration-300 shadow-lg
-          ${
-            loading
+          ${loading
               ? "bg-blue-400 cursor-not-allowed"
               : "bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white"
-          }`}
+            }`}
         >
           {loading ? "Processing..." : "Upload & Start Interview"}
         </button>
